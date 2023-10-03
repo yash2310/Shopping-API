@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="msoii1cx.sn4~" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shopping.Entity\Shopping.Entity.csproj" />
+    <ProjectReference Include="..\Shopping.Product.Business\Shopping.Product.Business.csproj" />
+    <ProjectReference Include="..\Shopping.Product.Data\Shopping.Product.Data.csproj" />
+    <ProjectReference Include="..\Shopping.Shared\Shopping.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

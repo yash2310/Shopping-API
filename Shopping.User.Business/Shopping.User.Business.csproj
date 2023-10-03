@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shopping.Shared\Shopping.Shared.csproj" />
+    <ProjectReference Include="..\Shopping.User.Data\Shopping.User.Data.csproj" />
+  </ItemGroup>
+
+</Project>
