@@ -10,4 +10,9 @@
     <Folder Include="Repository\Interface\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shopping.Entity\Shopping.Entity.csproj" />
+    <ProjectReference Include="..\Shopping.Shared\Shopping.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

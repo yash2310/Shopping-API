@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AutoMapperProfile\" />
     <Folder Include="Service\Interface\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shopping.Loggin.Data\Shopping.Loggin.Data.csproj" />
+    <ProjectReference Include="..\Shopping.Shared\Shopping.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ namespace Shopping.Entity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public new string Id { get; set; }
+        public new string Id { get; set; } = string.Empty;
         [BsonElement("Name")]
         public string Name { get; set; } = string.Empty;
     }

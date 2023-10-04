@@ -1,11 +1,32 @@
+using Serilog;
+using Shopping.Loggin.Business;
+using Shopping.Loggin.Data;
+using Shopping.Shared;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+#region Added Serilog Config for logging
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    //.Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+#endregion
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("LoggingStoreDatabase"));
+
+builder.Services.AddScoped<ILogRepo, LogRepo>();
+builder.Services.AddScoped<ILogService, LogService>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
