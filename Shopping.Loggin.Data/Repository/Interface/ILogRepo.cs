@@ -3,7 +3,7 @@ using Shopping.Shared;
 
 namespace Shopping.Loggin.Data
 {
-    public interface ILogRepo : INoSQLRepository<LogEntity>
+    public interface ILogRepo : ICosmosRepository<LogEntity>
     {
     }
 }

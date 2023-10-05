@@ -4,8 +4,8 @@ using Shopping.Shared;
 
 namespace Shopping.Product.Data.Repository
 {
-    public class ProductRepo : NoSQLRepository<ProductEntity>, IProductRepo
+    public class ProductRepo : MongoRepository<ProductEntity>, IProductRepo
     {
-        public ProductRepo(IOptions<DatabaseSettings> databaseSettings) : base(databaseSettings) { }
+        public ProductRepo(IOptions<MongoDatabaseSettings> databaseSettings) : base(databaseSettings) { }
     }
 }

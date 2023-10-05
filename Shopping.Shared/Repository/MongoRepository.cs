@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace Shopping.Shared
 {
-    public class NoSQLRepository<T> : INoSQLRepository<T> where T : class
+    public class MongoRepository<T> : IMongoRepository<T> where T : class
     {
         private readonly IMongoCollection<T> collection;
 
-        public NoSQLRepository(IOptions<DatabaseSettings> databaseSettings)
+        public MongoRepository(IOptions<MongoDatabaseSettings> databaseSettings)
         {
             var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);

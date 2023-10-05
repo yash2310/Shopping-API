@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.Azure.Cosmos;
 using Shopping.Entity;
 using Shopping.Loggin.Data;
-using Shopping.Shared;
 using Shopping.Shared.DTO;
-using System.Linq.Expressions;
 
 namespace Shopping.Loggin.Business
 {
@@ -21,7 +20,7 @@ namespace Shopping.Loggin.Business
         public async Task<bool> Create(LogDTO log)
         {
             var entity = mapper.Map<LogEntity>(log);
-            await logRepo.CreateAsync(entity);
+            await logRepo.CreateAsync(entity, new PartitionKey(entity.CorrelationId));
             return true;
         }
 

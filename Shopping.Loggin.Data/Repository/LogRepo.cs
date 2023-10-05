@@ -4,8 +4,8 @@ using Microsoft.Extensions.Options;
 
 namespace Shopping.Loggin.Data
 {
-    public class LogRepo : NoSQLRepository<LogEntity>, ILogRepo
+    public class LogRepo : CosmosRepository<LogEntity>, ILogRepo
     {
-        public LogRepo(IOptions<DatabaseSettings> databaseSettings) : base(databaseSettings) { }
+        public LogRepo(IOptions<CosmosDatabaseSettings> databaseSettings) : base(databaseSettings) { }
     }
 }

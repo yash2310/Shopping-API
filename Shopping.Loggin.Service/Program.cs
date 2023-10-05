@@ -21,7 +21,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("LoggingStoreDatabase"));
+builder.Services.Configure<CosmosDatabaseSettings>(builder.Configuration.GetSection("LoggingCosmosDatabase"));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddScoped<ILogRepo, LogRepo>();
 builder.Services.AddScoped<ILogService, LogService>();

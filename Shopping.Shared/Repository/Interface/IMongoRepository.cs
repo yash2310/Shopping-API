@@ -2,7 +2,7 @@
 
 namespace Shopping.Shared
 {
-    public interface INoSQLRepository<T> where T : class
+    public interface IMongoRepository<T> where T : class
     {
         Task<List<T>> GetAsync();
 
