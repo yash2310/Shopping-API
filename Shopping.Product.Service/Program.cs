@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ProductStoreDatabase"));
+builder.Services.Configure<CosmosDatabaseSettings>(builder.Configuration.GetSection("ProductCosmosDatabase"));
 
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddScoped<IProductService, ProductService>();

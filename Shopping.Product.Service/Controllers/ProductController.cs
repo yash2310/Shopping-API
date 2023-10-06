@@ -59,7 +59,7 @@ namespace Shopping.Product.Service.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("delete")]
         public async Task<bool> Delete(string id)
         {
@@ -74,8 +74,8 @@ namespace Shopping.Product.Service.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("allactive")]
+        [HttpGet]
+        [Route("instock")]
         public async Task<List<ProductDTO>> ActiveProduct()
         {
             Expression<Func<ProductDTO, bool>> expr = p => p.InStock == true;

@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.35.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shopping.Loggin.Data\Shopping.Loggin.Data.csproj" />
     <ProjectReference Include="..\Shopping.Shared\Shopping.Shared.csproj" />
   </ItemGroup>

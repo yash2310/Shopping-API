@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.Azure.Cosmos;
+//using Microsoft.Azure.Cosmos;
 using Shopping.Entity;
 using Shopping.Product.Data;
 using Shopping.Shared;
@@ -21,28 +21,28 @@ namespace Shopping.Product.Business
 
         public async Task<bool> Create(ProductDTO product)
         {
-            var data = await productRepo.GetAsync(product.Id.ToString(), new PartitionKey(product.Id.ToString()));
+            //var data = await productRepo.GetAsync(product.Id.ToString(), PartitionKey(product.Id));
 
-            if (data == null)
-            {
-                var entity = mapper.Map<ProductEntity>(product);
-                await productRepo.CreateAsync(entity, new PartitionKey(entity.Id.ToString()));
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //if (data == null)
+            //{
+            var entity = mapper.Map<ProductEntity>(product);
+            await productRepo.CreateAsync(entity, PartitionKey(entity.Id));
+            return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
         }
 
         public async Task<bool> Update(ProductDTO product)
         {
-            var data = await productRepo.GetAsync(product.Id.ToString(), new PartitionKey(product.Id.ToString()));
+            var data = await productRepo.GetAsync(product.Id.ToString(), PartitionKey(product.Id));
 
             if (data != null)
             {
                 var entity = mapper.Map<ProductEntity>(product);
-                await productRepo.UpdateAsync(entity, entity.Id.ToString(), new PartitionKey(product.Id.ToString()));
+                await productRepo.UpdateAsync(entity, entity.Id.ToString(), PartitionKey(product.Id));
                 return true;
             }
             else
@@ -53,11 +53,11 @@ namespace Shopping.Product.Business
 
         public async Task<bool> Delete(string id)
         {
-            var data = await productRepo.GetAsync(id.ToString(), new PartitionKey(id.ToString()));
+            var data = await productRepo.GetAsync(id.ToString(), PartitionKey(id));
 
             if (data != null)
             {
-                await productRepo.RemoveAsync(id, new PartitionKey(id.ToString()));
+                await productRepo.RemoveAsync(id, PartitionKey(id));
                 return true;
             }
             else
@@ -67,7 +67,7 @@ namespace Shopping.Product.Business
 
         public async Task<ProductDTO> Get(string id)
         {
-            var product = await productRepo.GetAsync(id, new PartitionKey(id.ToString()));
+            var product = await productRepo.GetAsync(id, PartitionKey(id));
 
             return mapper.Map<ProductDTO>(product);
         }

@@ -20,7 +20,11 @@ namespace Shopping.Loggin.Business
         public async Task<bool> Create(LogDTO log)
         {
             var entity = mapper.Map<LogEntity>(log);
-            await logRepo.CreateAsync(entity, PartitionKey(entity.Id.ToString()));
+
+            entity.Id = Guid.NewGuid();
+            entity.CreatedBy = log.Username;
+
+            await logRepo.CreateAsync(entity, PartitionKey(entity.Id));
             return true;
         }
 
