@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Shopping.Loggin.Business;
 using Shopping.Loggin.Data;
@@ -27,6 +28,12 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ILogRepo, LogRepo>();
 builder.Services.AddScoped<ILogService, LogService>();
 
+builder.Services.AddApiVersioning(config =>
+{
+    config.DefaultApiVersion = new ApiVersion(1, 0);
+    config.AssumeDefaultVersionWhenUnspecified = true;
+    config.ReportApiVersions = true;
+});
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Shopping.Shared.DTO;
-using Shopping.Shared.Enum;
+﻿using Shopping.Shared.Enum;
 using System.Net.Http.Headers;
 
 namespace Shopping.Shared.Utility

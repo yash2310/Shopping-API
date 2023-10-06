@@ -1,5 +1,4 @@
 ﻿using Shopping.Shared;
-using Shopping.Shared.DTO;
 
 namespace Shopping.User.Business
 {

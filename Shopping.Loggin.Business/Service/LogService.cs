@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.Azure.Cosmos;
 using Shopping.Entity;
 using Shopping.Loggin.Data;
-using Shopping.Shared.DTO;
+using Shopping.Shared;
+using Shopping.Shared.Service;
 
 namespace Shopping.Loggin.Business
 {
-    public class LogService: ILogService
+    public class LogService : BaseService, ILogService
     {
         private readonly ILogRepo logRepo;
         private readonly IMapper mapper;
@@ -20,15 +20,21 @@ namespace Shopping.Loggin.Business
         public async Task<bool> Create(LogDTO log)
         {
             var entity = mapper.Map<LogEntity>(log);
-            await logRepo.CreateAsync(entity, new PartitionKey(entity.CorrelationId));
+            await logRepo.CreateAsync(entity, PartitionKey(entity.Id.ToString()));
             return true;
         }
 
-        public async Task<List<LogDTO>> GetAll()
+        public async Task<List<SearchLogDTO>> GetAll()
         {
             var products = await logRepo.GetAsync();
 
-            return mapper.Map<List<LogDTO>>(products);
+            return mapper.Map<List<SearchLogDTO>>(products);
+        }
+
+        public async Task<List<SearchLogDTO>> Filter(DateTime startDate, DateTime endDate)
+        {
+            var logs = await logRepo.WhereAsync(l => l.CreatedOn >= startDate && l.CreatedOn <= endDate);
+            return mapper.Map<List<SearchLogDTO>>(logs);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.Shared;
-using Shopping.Shared.Constants;
-using Shopping.Shared.DTO;
 using Shopping.User.Business;
 
 namespace Shopping.User.Service.Controllers

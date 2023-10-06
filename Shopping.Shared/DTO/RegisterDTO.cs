@@ -1,4 +1,4 @@
-﻿namespace Shopping.Shared.DTO
+﻿namespace Shopping.Shared
 {
     public class RegisterDTO: UserDTO
     {

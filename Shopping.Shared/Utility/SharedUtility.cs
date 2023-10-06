@@ -18,5 +18,15 @@ namespace Shopping.Shared
 
             return item;
         }
+
+        public static Guid GetUniqueId(Guid id)
+        {
+            if(id == Guid.Empty)
+            {
+                id = Guid.NewGuid();
+            }
+
+            return id;
+        }
     }
 }

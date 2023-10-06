@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
-using SharpCompress.Common;
+using Microsoft.Azure.Cosmos;
 using Shopping.Entity;
 using Shopping.Product.Data;
 using Shopping.Shared;
+using Shopping.Shared.Service;
 using System.Linq.Expressions;
 
 namespace Shopping.Product.Business
 {
-    public class ProductService : IProductService
+    public class ProductService : BaseService, IProductService
     {
         private readonly IProductRepo productRepo;
         private readonly IMapper mapper;
@@ -20,14 +21,12 @@ namespace Shopping.Product.Business
 
         public async Task<bool> Create(ProductDTO product)
         {
-            Expression<Func<Entity.ProductEntity, bool>> expr = p => p.ProductId == product.ProductId;
-
-            var data = await productRepo.GetAsync(expr);
+            var data = await productRepo.GetAsync(product.Id.ToString(), new PartitionKey(product.Id.ToString()));
 
             if (data == null)
             {
-                var entity = mapper.Map<Entity.ProductEntity>(product);
-                await productRepo.CreateAsync(entity);
+                var entity = mapper.Map<ProductEntity>(product);
+                await productRepo.CreateAsync(entity, new PartitionKey(entity.Id.ToString()));
                 return true;
             }
             else
@@ -38,14 +37,12 @@ namespace Shopping.Product.Business
 
         public async Task<bool> Update(ProductDTO product)
         {
-            Expression<Func<Entity.ProductEntity, bool>> expr = p => p.ProductId == product.ProductId;
-
-            var data = await productRepo.GetAsync(expr);
+            var data = await productRepo.GetAsync(product.Id.ToString(), new PartitionKey(product.Id.ToString()));
 
             if (data != null)
             {
-                var entity = mapper.Map<Entity.ProductEntity>(product);
-                await productRepo.UpdateAsync(expr, entity);
+                var entity = mapper.Map<ProductEntity>(product);
+                await productRepo.UpdateAsync(entity, entity.Id.ToString(), new PartitionKey(product.Id.ToString()));
                 return true;
             }
             else
@@ -54,15 +51,13 @@ namespace Shopping.Product.Business
             }
         }
 
-        public async Task<bool> Delete(int productId)
+        public async Task<bool> Delete(string id)
         {
-            Expression<Func<Entity.ProductEntity, bool>> expr = p => p.ProductId == productId;
-
-            var data = await productRepo.GetAsync(expr);
+            var data = await productRepo.GetAsync(id.ToString(), new PartitionKey(id.ToString()));
 
             if (data != null)
             {
-                await productRepo.RemoveAsync(expr);
+                await productRepo.RemoveAsync(id, new PartitionKey(id.ToString()));
                 return true;
             }
             else
@@ -70,11 +65,9 @@ namespace Shopping.Product.Business
 
         }
 
-        public async Task<ProductDTO> Get(int id)
+        public async Task<ProductDTO> Get(string id)
         {
-            Expression<Func<Entity.ProductEntity, bool>> expr = p => p.ProductId == id;
-
-            var product = await productRepo.GetAsync(expr);
+            var product = await productRepo.GetAsync(id, new PartitionKey(id.ToString()));
 
             return mapper.Map<ProductDTO>(product);
         }
@@ -88,13 +81,13 @@ namespace Shopping.Product.Business
 
         public async Task<List<ProductDTO>> Where(Expression<Func<ProductDTO, bool>> expression)
         {
-            var param = Expression.Parameter(typeof(Entity.ProductEntity));
+            var param = Expression.Parameter(typeof(ProductEntity));
 
-            var body = new Visitor<Entity.ProductEntity>(param).Visit(expression.Body);
+            var body = new Visitor<ProductEntity>(param).Visit(expression.Body);
 
             // Convert expresion from one to another type
-            Expression<Func<Entity.ProductEntity, bool>> expr = Expression.Lambda<Func<Entity.ProductEntity, bool>>(body, param);
-            
+            Expression<Func<ProductEntity, bool>> expr = Expression.Lambda<Func<ProductEntity, bool>>(body, param);
+
             var products = await productRepo.WhereAsync(expr);
             return mapper.Map<List<ProductDTO>>(products);
         }

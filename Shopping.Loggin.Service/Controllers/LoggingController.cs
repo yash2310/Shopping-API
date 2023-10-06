@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.Loggin.Business;
-using Shopping.Shared.DTO;
+using Shopping.Shared;
 
 namespace Shopping.Loggin.Service.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoggingController : ControllerBase
+    public class LoggingController : BaseController
     {
         private readonly ILogService logService;
         private readonly ILogger<LoggingController> logger;
@@ -19,23 +19,38 @@ namespace Shopping.Loggin.Service.Controllers
 
         [HttpGet]
         [Route("list")]
-        public async Task<List<LogDTO>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await logService.GetAll();
+            return Ok(await logService.GetAll());
         }
 
         [HttpPost]
         [Route("add")]
-        public async Task<bool> CreateAsync(LogDTO log)
+        public async Task<IActionResult> CreateAsync(LogDTO log)
         {
             try
             {
                 var result = await logService.Create(log);
-                return result;
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return false;
+                return Ok(false);
+            }
+        }
+
+        [HttpGet]
+        [Route("filter")]
+        public async Task<IActionResult> FilterAsync(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var result = await logService.Filter(startDate, endDate);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok(false);
             }
         }
     }

@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Shopping.Shared.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Shopping.Shared
 {
-    public class BaseController: ControllerBase
+    public class BaseController : ControllerBase
     {
         //public string Token
         //{
@@ -26,5 +23,15 @@ namespace Shopping.Shared
         //        return new ResponseDTO { IsSuccess = false, ErrorMessage = ex.Message };
         //    }
         //}
+
+        public string CorrrelationId
+        {
+            get
+            {
+                var header = Request.Headers.FirstOrDefault(h => h.Key == "Correlation-Id");
+
+                return header.Equals(default(KeyValuePair<string, string>)) ? "" : header.Value;
+            }
+        }
     }
 }

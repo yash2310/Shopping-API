@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Shopping.Shared.DTO
+﻿namespace Shopping.Shared
 {
     public class ResponseDTO
     {

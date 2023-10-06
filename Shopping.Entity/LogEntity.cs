@@ -3,12 +3,8 @@ using Shopping.Shared.Enum;
 
 namespace Shopping.Entity
 {
-    public class LogEntity
+    public class LogEntity: CosmosBaseEntity
     {
-        //[BsonId]
-        //[BsonRepresentation(BsonType.ObjectId)]
-        [JsonProperty(PropertyName = "id")]
-        public Guid Id { get; set; }
         [JsonProperty(PropertyName = "correlationId")]
         public string CorrelationId { get; set; } = string.Empty;
         [JsonProperty(PropertyName = "servicePath")]

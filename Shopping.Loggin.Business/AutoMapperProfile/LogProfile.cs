@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Shopping.Entity;
-using Shopping.Shared.DTO;
+using Shopping.Shared;
 
 namespace Shopping.Loggin.Business
 {
@@ -9,6 +9,7 @@ namespace Shopping.Loggin.Business
         public LogProfile()
         {
             CreateMap<LogDTO, LogEntity>().ReverseMap();
+            CreateMap<SearchLogDTO, LogEntity>().ReverseMap();
         }
     }
 }

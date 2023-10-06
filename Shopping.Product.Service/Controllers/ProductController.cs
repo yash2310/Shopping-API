@@ -17,7 +17,7 @@ namespace Shopping.Product.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<ProductDTO> GetProduct(int id)
+        public async Task<ProductDTO> GetProduct(string id)
         {
             return await productService.Get(id);
         }
@@ -61,7 +61,7 @@ namespace Shopping.Product.Service.Controllers
 
         [HttpPost]
         [Route("delete")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(string id)
         {
             try
             {
