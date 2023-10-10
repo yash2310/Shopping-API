@@ -12,7 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<CosmosDatabaseSettings>(builder.Configuration.GetSection("ProductCosmosDatabase"));
+//builder.Services.Configure<CosmosDatabaseSettings>(builder.Configuration.GetSection("ProductCosmosDatabase"));
+builder.Services.Configure<MongoDatabaseSettings>(builder.Configuration.GetSection("ProductMongoDatabase"));
 
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddScoped<IProductService, ProductService>();

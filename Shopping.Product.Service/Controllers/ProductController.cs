@@ -36,6 +36,17 @@ namespace Shopping.Product.Service.Controllers
             try
             {
                 var result = await productService.Create(product);
+
+
+                HttpClientUtility.Post("https://localhost:7023/api/logging/add", new LogDTO
+                {
+                    CorrelationId ="",
+                    LogType = Shared.Enum.LogType.Information,
+                    Message = "Test Message",
+                    ServicePath = $"{Request.Scheme}://{Request.Host}",
+                    Username = "yash.prajapati"
+                });
+
                 return result;
             }
             catch (Exception ex)

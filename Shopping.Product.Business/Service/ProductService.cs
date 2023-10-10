@@ -21,28 +21,21 @@ namespace Shopping.Product.Business
 
         public async Task<bool> Create(ProductDTO product)
         {
-            //var data = await productRepo.GetAsync(product.Id.ToString(), PartitionKey(product.Id));
-
-            //if (data == null)
-            //{
             var entity = mapper.Map<ProductEntity>(product);
-            await productRepo.CreateAsync(entity, PartitionKey(entity.Id));
+            entity.Id = Guid.NewGuid();
+            await productRepo.CreateAsync(entity);
+
             return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
         public async Task<bool> Update(ProductDTO product)
         {
-            var data = await productRepo.GetAsync(product.Id.ToString(), PartitionKey(product.Id));
+            var data = await productRepo.GetAsync(p => p.Id == product.Id);
 
             if (data != null)
             {
                 var entity = mapper.Map<ProductEntity>(product);
-                await productRepo.UpdateAsync(entity, entity.Id.ToString(), PartitionKey(product.Id));
+                await productRepo.UpdateAsync(p => p.Id == product.Id, entity);
                 return true;
             }
             else
@@ -53,11 +46,11 @@ namespace Shopping.Product.Business
 
         public async Task<bool> Delete(string id)
         {
-            var data = await productRepo.GetAsync(id.ToString(), PartitionKey(id));
+            var data = await productRepo.GetAsync(p => p.Id.ToString() == id);
 
             if (data != null)
             {
-                await productRepo.RemoveAsync(id, PartitionKey(id));
+                await productRepo.RemoveAsync(p => p.Id.ToString() == id);
                 return true;
             }
             else
@@ -67,7 +60,7 @@ namespace Shopping.Product.Business
 
         public async Task<ProductDTO> Get(string id)
         {
-            var product = await productRepo.GetAsync(id, PartitionKey(id));
+            var product = await productRepo.GetAsync(p => p.Id.ToString() == id);
 
             return mapper.Map<ProductDTO>(product);
         }

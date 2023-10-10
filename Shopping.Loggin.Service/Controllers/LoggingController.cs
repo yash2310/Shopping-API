@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Shopping.Loggin.Business;
 using Shopping.Shared;
 
@@ -30,7 +31,9 @@ namespace Shopping.Loggin.Service.Controllers
         {
             try
             {
-                var result = await logService.Create(log);
+                StringValues corId;
+                var flag = Request.Headers.TryGetValue("Correlation-Id", out corId);
+                var result = await logService.Create(log, flag, corId);
                 return Ok(result);
             }
             catch (Exception ex)

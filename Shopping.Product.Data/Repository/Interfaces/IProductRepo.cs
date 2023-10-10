@@ -3,7 +3,7 @@ using Shopping.Shared;
 
 namespace Shopping.Product.Data
 {
-    public interface IProductRepo: ICosmosRepository<ProductEntity>
+    public interface IProductRepo: IMongoRepository<ProductEntity>
     {
     }
 }

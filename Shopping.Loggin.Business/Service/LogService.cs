@@ -17,11 +17,12 @@ namespace Shopping.Loggin.Business
             this.mapper = mapper;
         }
 
-        public async Task<bool> Create(LogDTO log)
+        public async Task<bool> Create(LogDTO log, bool flag, string corId)
         {
             var entity = mapper.Map<LogEntity>(log);
 
             entity.Id = Guid.NewGuid();
+            entity.CorrelationId = flag ? corId : Guid.NewGuid().ToString();
             entity.CreatedBy = log.Username;
 
             await logRepo.CreateAsync(entity, PartitionKey(entity.Id));
